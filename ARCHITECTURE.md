@@ -85,8 +85,7 @@ The weekly synthesizer reads:
 3. `_meta/drafts/lessons/*.md` (pending lesson candidates from the week)
 
 It produces:
-- `logs/weekly/YYYY-Www.md` with cross-week patterns, stuck/abandoned projects, **promotion candidates** (lessons that fired 2+ times — flagged for future L3 skill generation), optional LinkedIn drafts.
-- LinkedIn drafts extracted by `extract-linkedin-drafts.py` for separate review.
+- `logs/weekly/YYYY-Www.md` with cross-week patterns, stuck/abandoned projects, **promotion candidates** (lessons that fired 2+ times — flagged for skill generation).
 
 Anti-fool rules in the weekly prompt (confidentiality abstraction, no buzzword density, no formulaic CTAs, every claim defensible) prevent eager "look-what-I-built" drafts. These rules are baked into the prompt; you can edit them in `.bin/weekly-synthesis.sh`.
 
