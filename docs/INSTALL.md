@@ -58,15 +58,23 @@ Edit `$BRAIN_ROOT/_meta/PROJECTS.tsv` — one line per git repo you want tracked
 
 For each `nick`, create a project note at `$BRAIN_ROOT/projects/<nick>.md`. You can copy `examples/sample-vault/projects/my-app.md` as a template.
 
-### 5. First manual run (no API call)
+### 5. Populate frontmatter from real git state
+
+```bash
+BRAIN_ROOT="$BRAIN_ROOT" python3 .bin/harvest.py
+```
+
+`harvest.py` walks each repo in `PROJECTS.tsv`, fetches the latest origin state, and writes frontmatter (`last_commit_date`, `current_branch`, `behind`, etc.) into your project notes. It's idempotent — safe to re-run any time. Without this step, your `projects/<nick>.md` files keep the sample dates and the synthesis sees zero active projects.
+
+### 6. First manual prompt build (no API call yet)
 
 ```bash
 python3 .bin/build_daily_prompt.py --brain-root "$BRAIN_ROOT" --today $(date +%Y-%m-%d)
 ```
 
-This is read-only — it builds the prompt and prints it. Inspect that your active projects, lessons, and history appear correctly.
+Read-only — builds the prompt and prints it to stdout. Verify your active projects, lessons, and history blocks render correctly.
 
-### 6. First real run (API call)
+### 7. First real run (API call)
 
 ```bash
 bash .bin/daily.sh
@@ -82,7 +90,7 @@ ls  $BRAIN_ROOT/_meta/drafts/lessons/
 
 Compare project notes — only `## Daily synthesis (auto)` should change; your curated sections should be byte-equal.
 
-### 7. Schedule via launchd
+### 8. Schedule via launchd
 
 ```bash
 # Copy plist templates
