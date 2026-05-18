@@ -1,0 +1,6 @@
+# Source of truth for the harvester. Tab-separated.
+# path	tier	nickname (=filename in projects/)
+#
+/tmp/qm	hot	my-app
+/tmp/lt	hot	my-lib
+/tmp/ar	warm	my-old

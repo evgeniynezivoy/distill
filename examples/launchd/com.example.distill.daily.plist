@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.example.distill.daily</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <!-- TODO: replace this path with your absolute path to distill -->
+        <string>/Users/YOUR_USERNAME/distill/.bin/daily.sh</string>
+    </array>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <!-- TODO: point this at your own vault root -->
+        <key>BRAIN_ROOT</key>
+        <string>/Users/YOUR_USERNAME/brain</string>
+        <key>PATH</key>
+        <string>/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin</string>
+    </dict>
+
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key>
+        <integer>9</integer>
+        <key>Minute</key>
+        <integer>0</integer>
+    </dict>
+
+    <key>RunAtLoad</key>
+    <false/>
+
+    <key>StandardOutPath</key>
+    <string>/tmp/distill-daily.out</string>
+
+    <key>StandardErrorPath</key>
+    <string>/tmp/distill-daily.err</string>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/YOUR_USERNAME</string>
+</dict>
+</plist>

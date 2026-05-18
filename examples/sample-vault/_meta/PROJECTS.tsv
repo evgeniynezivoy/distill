@@ -1,0 +1,6 @@
+# Source of truth for the harvester. Tab-separated.
+# path	tier	nickname (=filename in projects/)
+# Edit when projects are added / removed / change tier.
+#
+/Users/you/code/my-app	hot	my-app
+/Users/you/code/my-lib	warm	my-lib

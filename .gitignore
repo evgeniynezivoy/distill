@@ -1,0 +1,13 @@
+.DS_Store
+.pytest_cache/
+__pycache__/
+.bin/__pycache__/
+.bin/tests/__pycache__/
+.bin/logs/*.log
+*.pyc
+*.tmp
+*.bak
+.venv/
+venv/
+.env
+.env.local

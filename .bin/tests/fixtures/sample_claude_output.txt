@@ -1,0 +1,54 @@
+Some preamble from Claude that we should ignore.
+
+---START-DAILY-LOG---
+---
+date: 2026-05-18
+projects_touched: [my-app]
+smells_repeat: [predicate-as-defense]
+smells_new: [2026-05-18-jwt-refresh-staleness]
+cross_project: []
+clean_day: false
+---
+
+# Daily — 2026-05-18
+
+## Per-project
+### my-app
+- Commits: 1 (`abc1234 fix(issues): reject status #152`)
+- Smell repeat: [[lessons/predicate-as-defense]] — снова валидация post-hoc, не predicate.
+
+## Cross-project
+(none)
+
+## New lesson candidates
+- 2026-05-18-jwt-refresh-staleness — see draft
+
+## Promotion candidates (L3 future)
+(none)
+---END-DAILY-LOG---
+
+---START-LESSON-DRAFT---
+slug: 2026-05-18-jwt-refresh-staleness
+---
+name: jwt-refresh-staleness
+description: JWT payload remains stale after refresh
+source: daily-synthesis 2026-05-18
+trigger_project: my-app
+trigger_commit: abc1234
+status: draft
+---
+
+## Trigger
+JWT refresh sometimes returns same payload despite role change.
+
+## Root cause
+Cache key derives from token only, not from user version.
+
+## Structural fix
+Include user-version in cache key OR invalidate on role change.
+
+## Bigger lesson
+Любой cache по token'у — это implicit assumption что token = state. На refresh state может уйти вперёд токена.
+---END-LESSON-DRAFT---
+
+Trailing chatter that should be ignored.
