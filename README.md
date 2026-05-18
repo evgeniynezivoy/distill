@@ -17,7 +17,7 @@ detect repeat smell in today's commits
 
 In other words: instead of you reading post-mortems and trying to remember, **the next pair-programming session already knows**. Your vault grows from passive archive → active library of lessons → executable skills that prevent recurrence at the keyboard.
 
-The daily/lesson half is shipping today (phase L2). The skills-promotion half is phase L3 — designed, hooks in place in the data, not built yet. The point of going public now is to validate the design before building the rest.
+Both halves ship today. L2 (daily synthesis + lesson drafts) runs in the morning. L3 (skill auto-promotion) runs weekly: a small script aggregates which lessons fired N≥3 times across M≥2 projects in the last 30 days, then drafts a Claude Code skill from each one. You approve via the apply skill, and the next coding session has new guardrails.
 
 The whole arc: each commit you make next week is cleaner than the one this week — and a few months from now, mistakes that used to take three project-incidents to learn won't make it past your editor.
 
@@ -130,8 +130,8 @@ distill is the conservative bet. It misses some signal in exchange for not makin
 ## Roadmap
 
 - ✅ **L1** — Static vault, manual notes, harvest daemon for git state.
-- ✅ **L2** — Generative daily synthesis (this release).
-- 🔜 **L3** — Self-improving skills: lessons triggered N times → auto-generate Claude Code skills that activate in next sessions and prevent recurrence before commit.
+- ✅ **L2** — Generative daily synthesis.
+- ✅ **L3** — Skill auto-promotion (this release): `promote_lessons.py` runs weekly, drafts Claude Code skills from frequently-firing lessons. Thresholds tunable via `PROMOTE_N` / `PROMOTE_M` env vars.
 - 🔜 **L4** — Monthly drift detection: re-read each project's CLAUDE.md, diff against your vault, flag architecture drift.
 
 ## Status

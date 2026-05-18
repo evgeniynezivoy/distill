@@ -17,5 +17,6 @@ export BRAIN_ROOT="$BRAIN"
 bash "$BIN/weekly-synthesis.sh" || echo "weekly.sh: weekly-synthesis.sh exit non-zero"
 "$PY" "$BIN/extract-linkedin-drafts.py" || echo "weekly.sh: extract-linkedin-drafts.py exit non-zero"
 bash "$BIN/weekly-drafts.sh" || echo "weekly.sh: weekly-drafts.sh exit non-zero"
+"$PY" "$BIN/promote_lessons.py" --brain-root "$BRAIN" || echo "weekly.sh: promote_lessons.py exit non-zero"
 
 echo "weekly.sh: done at $(date)"

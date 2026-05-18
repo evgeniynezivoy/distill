@@ -35,13 +35,19 @@ name, path, tier, last_commit_date, last_commit, default_branch, remote, current
 
 The daily prompt forbids AI from interpreting smells without a lesson anchor. Adding a new lesson is the way to teach the daemon a new pattern; the AI cannot invent lesson categories on its own. If users complain "the daemon doesn't notice X" — the answer is usually "add a lesson for X." Don't change the prompt to make AI more autonomous; that'll just increase false positives.
 
+### L3 promotion (`promote_lessons.py`)
+
+Runs weekly via `weekly.sh`. Aggregates firings from `logs/daily/*.md`, identifies lessons that fired N≥3 times across M≥2 projects in the last 30 days, drafts Claude Code skills from them. Drafts land in `_meta/drafts/skills/<YYYY-MM-DD>-<lesson>.md` and require human approval via the apply skill.
+
+Tunable: `PROMOTE_N`, `PROMOTE_M` env vars. The script supports `--dry-run` for inspection without API calls.
+
 ### Tests
 
 Anything in `.bin/` is covered by `pytest .bin/tests/`. Run tests before and after every change:
 ```bash
 cd ~/distill && pytest .bin/tests/ -v
 ```
-All 24 tests must pass. If you change behavior, **add a test first** that captures the new expectation.
+All 37 tests must pass (24 L2 + 13 L3). If you change behavior, **add a test first** that captures the new expectation.
 
 ### Shell style
 

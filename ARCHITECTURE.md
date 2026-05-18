@@ -111,21 +111,32 @@ incident in real project (a fix, a migration, a refactor)
 
 Both paths converge on `lessons/`. From there, lessons feed back into daily prompts as the "source of truth" — daily synthesis is forbidden from interpreting smells with no lesson context, which prevents AI-hallucinated false positives.
 
-## Hooks for L3 (future)
+## Phase L3 (current implementation)
 
-L3 builds on data that L2 already produces:
-- `logs/daily/*.md` frontmatter: `smells_repeat: [<lesson-name>]`
-- `_meta/drafts/lessons/*.md` frontmatter: `trigger_project`, `trigger_commit`
+L3 runs in the weekly cycle. Algorithm:
+1. `promote_lessons.py` reads frontmatter of all `logs/daily/*.md` from the last 30 days.
+2. For each per-project section, it parses the `## Per-project` body to attribute lessons to specific projects (more accurate than the frontmatter summary).
+3. Aggregates: each (lesson, project, date) triple becomes a "firing event".
+4. Threshold: lesson qualifies if total firings ≥ N (default 3) AND distinct projects ≥ M (default 2). Both tunable via `PROMOTE_N` / `PROMOTE_M` env vars.
+5. For each candidate, invokes `claude --print` with the lesson body + firing events. Claude drafts a SKILL.md with frontmatter, trigger conditions, workflow, and reference back to the source lesson.
+6. Draft is written atomically to `_meta/drafts/skills/<YYYY-MM-DD>-<lesson-name>.md`. Existing drafts are not overwritten (skip-if-exists).
+7. User runs the apply skill to materialize approved drafts to `~/.claude/skills/<name>/SKILL.md`.
 
-L3 algorithm (when there's enough data — author's estimate: ~1 month of L2 with active vault):
-1. Aggregate `smells_repeat` per lesson across last 30 days
-2. If lesson L appeared N≥3 times across 2+ projects → candidate for skill promotion
-3. Daily AI generates draft skill in `_meta/drafts/skills/<lesson>.md`
-4. User reviews and accepts
-5. Approved skill materialized to `~/.claude/skills/<name>/SKILL.md`
-6. Future sessions in any project auto-activate the skill, preventing repeats *before commit*
+Why an extra human-in-the-loop gate (vs lessons): a sloppy lesson clutters the library; a sloppy skill modifies *every* future session's behavior. The cost asymmetry is large, so skill promotion requires explicit approval with visibility into the trigger + workflow content.
 
-L3 isn't built yet. L2 just leaves the hooks.
+### Tunable thresholds
+
+N=3 firings, M=2 projects, 30-day window — these are conservative defaults. If the threshold produces zero candidates for too long, lower them via env:
+```bash
+PROMOTE_N=2 PROMOTE_M=2 python3 .bin/promote_lessons.py --brain-root ~/brain
+```
+The right setting depends on your project portfolio diversity. The author's working hypothesis: N=3/M=2 catches genuine cross-cutting patterns without over-promoting one-project quirks.
+
+### What L3 doesn't do
+
+- It doesn't auto-install skills. The apply gate is mandatory.
+- It doesn't curate the skill afterwards. The draft is what Claude produced; you edit it before approval if needed.
+- It doesn't track which skills actually fire in real sessions. That's L5+ territory (effectiveness measurement).
 
 ## Design choices
 
