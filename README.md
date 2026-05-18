@@ -1,10 +1,25 @@
 # distill
 
-> Every morning, distill your git noise into one signal. Catch the same mistake before you make it the third time.
+> Every morning, distill your git noise into one signal. Catch the same mistake before you make it the third time — then, eventually, **let the system stop you from making it at all**.
 
 **distill** is a small automation that turns an Obsidian vault into an *immune system for your projects*. It reads what you committed across all your tracked repos overnight, compares the work to a library of structural lessons you've recorded from past incidents, flags repeats, drafts new lesson candidates when it sees something structurally novel, and surfaces cross-project patterns you'd never notice on a single project.
 
-The whole point: each commit you make next week is cleaner than the one this week, because the system tells you when you're about to step on the same rake again.
+But that's just the loop's first half. The real point is the **closed loop**:
+
+```
+detect repeat smell in today's commits
+   → draft a lesson (you accept it)
+   → daemon sees it fire N times across projects
+   → it drafts a Claude Code skill (you accept it)
+   → that skill auto-activates in your next coding session
+   → and stops the mistake before commit
+```
+
+In other words: instead of you reading post-mortems and trying to remember, **the next pair-programming session already knows**. Your vault grows from passive archive → active library of lessons → executable skills that prevent recurrence at the keyboard.
+
+The daily/lesson half is shipping today (phase L2). The skills-promotion half is phase L3 — designed, hooks in place in the data, not built yet. The point of going public now is to validate the design before building the rest.
+
+The whole arc: each commit you make next week is cleaner than the one this week — and a few months from now, mistakes that used to take three project-incidents to learn won't make it past your editor.
 
 ---
 
@@ -83,6 +98,20 @@ launchctl load ~/Library/LaunchAgents/com.YOUR_USERNAME.distill.weekly.plist
 ```
 
 That's it. Tomorrow at 09:00 the daemon runs.
+
+## Why this is different from "daily AI summary" tools
+
+Plenty of tools will read your git log and produce a daily writeup. distill is built around a different goal: the writeup is a **byproduct**. The actual artifact is a growing library of structural lessons that eventually compile down to Claude Code skills.
+
+| Daily AI summary tools | distill |
+|---|---|
+| Output: a paragraph you read | Output: structured lessons + (L3) skills that activate at the keyboard |
+| Detection: AI interprets each day fresh | Detection: AI is anchored to your lessons library — can only flag what fits an existing structural concept (or propose a new one for review) |
+| Cross-project: not really | Cross-project: explicit — patterns visible in 2+ projects same day are surfaced as a section |
+| Memory: lossy paragraph in a folder | Memory: typed graph — lessons feed into next day's prompt as source-of-truth |
+| Failure mode: drowns in noise / shallow daily | Failure mode: misses novel smells (anchored detection is conservative by design) |
+
+distill is the conservative bet. It misses some signal in exchange for not making things up. The lessons library is the throttle.
 
 ## Design philosophy
 
